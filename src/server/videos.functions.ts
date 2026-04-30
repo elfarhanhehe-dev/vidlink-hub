@@ -159,7 +159,7 @@ export const trackEvent = createServerFn({ method: "POST" })
     }).parse
   )
   .handler(async ({ data }) => {
-    const ip = getRequestIP({ xForwardedFor: true });
+    const ip = getRequestIP({ xForwardedFor: true }) ?? null;
     const referrer = getRequestHeader("referer") || null;
     const userAgent = getRequestHeader("user-agent") || null;
     const geo = await geolocate(ip);
