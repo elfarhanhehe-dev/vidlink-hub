@@ -5,6 +5,7 @@ import { verifyAdminToken } from "@/server/videos.functions";
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin — videy" }] }),
   component: AdminLogin,
+  ssr: false,
 });
 
 function AdminLogin() {
@@ -12,10 +13,14 @@ function AdminLogin() {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && sessionStorage.getItem("admin_token")) {
-      navigate({ to: "/admin/dashboard" });
+    const existing = sessionStorage.getItem("admin_token");
+    if (existing) {
+      navigate({ to: "/admin/dashboard", replace: true });
+    } else {
+      setChecking(false);
     }
   }, [navigate]);
 
@@ -26,13 +31,21 @@ function AdminLogin() {
     try {
       await verifyAdminToken({ data: { token } });
       sessionStorage.setItem("admin_token", token);
-      navigate({ to: "/admin/dashboard" });
+      // Use replace so back button doesn't return to login
+      await navigate({ to: "/admin/dashboard", replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
-    } finally {
       setLoading(false);
     }
   };
+
+  if (checking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
+        Loading…
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
