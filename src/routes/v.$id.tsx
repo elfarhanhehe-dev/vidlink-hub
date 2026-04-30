@@ -43,6 +43,9 @@ export const Route = createFileRoute("/v/$id")({
 
 function VideoView() {
   const v = Route.useLoaderData();
+  useEffect(() => {
+    trackEvent({ data: { videoId: v.id, eventType: "view" } }).catch(() => {});
+  }, [v.id]);
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex items-center justify-between px-6 py-5 md:px-12">
