@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      video_events: {
+        Row: {
+          city: string | null
+          country: string | null
+          country_code: string | null
+          created_at: string
+          event_type: string
+          id: number
+          referrer: string | null
+          region: string | null
+          user_agent: string | null
+          video_id: string
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          country_code?: string | null
+          created_at?: string
+          event_type: string
+          id?: number
+          referrer?: string | null
+          region?: string | null
+          user_agent?: string | null
+          video_id: string
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          country_code?: string | null
+          created_at?: string
+          event_type?: string
+          id?: number
+          referrer?: string | null
+          region?: string | null
+          user_agent?: string | null
+          video_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "video_events_video_id_fkey"
+            columns: ["video_id"]
+            isOneToOne: false
+            referencedRelation: "videos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       videos: {
         Row: {
           content_type: string | null
