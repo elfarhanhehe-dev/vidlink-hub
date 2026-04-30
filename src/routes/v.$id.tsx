@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { getVideo } from "@/server/videos.functions";
+import { useEffect } from "react";
+import { getVideo, trackEvent } from "@/server/videos.functions";
 
 export const Route = createFileRoute("/v/$id")({
   loader: ({ params }) => getVideo({ data: { id: params.id } }),
