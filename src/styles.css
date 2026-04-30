@@ -137,8 +137,15 @@
     border-color: var(--color-border);
   }
 
-  body {
-    background-color: var(--color-background);
+  html, body {
+    background: linear-gradient(135deg, oklch(0.985 0.005 240) 0%, oklch(0.96 0.015 250) 100%);
     color: var(--color-foreground);
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.04em;
+    font-weight: 800;
   }
 }
